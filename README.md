@@ -1,49 +1,61 @@
-# Çalışan Bağlılığı Analizi: Random Forest ile Şirketlerdeki Çalışan Sürelerini Tahmin Etme
+# Çalışan İşten Ayrılma Tahmini: Random Forest ve Karmaşıklık Matrisi ile Değerlendirme
 
 ## Proje Açıklaması
 
-Bu proje, şirketlerdeki çalışan bağlılığını analiz etmek amacıyla **Random Forest** algoritmasını kullanır. Çalışanların kişisel ve profesyonel verilerini kullanarak, hangi faktörlerin çalışanların şirketteki kalış sürelerini etkilediğini tahmin eder. Bu model, şirketlerin insan kaynakları stratejilerini geliştirmelerine yardımcı olabilir.
+Bu proje, bir şirketin çalışanlarının işten ayrılma olasılıklarını tahmin etmek amacıyla geliştirilmiştir. Çalışanların işten ayrılma (attrition) kararlarını etkileyen çeşitli faktörler göz önünde bulundurularak, **Random Forest** algoritması kullanılarak bir makine öğrenmesi modeli oluşturulmuştur. Modelin performansı, **karmaşıklık matrisi (confusion matrix)** ve diğer metriklerle (precision, recall, f1-score) değerlendirilmiştir.
 
-## Amaç
+Projenin amacı, özellikle düşük memnuniyet seviyeleri, yüksek iş yükü gibi faktörlerin işten ayrılma kararları üzerindeki etkisini analiz etmek ve bu bilgilerle şirketlerin iş gücü yönetimi stratejilerini geliştirmelerine yardımcı olmaktır.
 
-- Çalışanların şirkette ne kadar süre kalacaklarını tahmin etmek.
-- Çalışan bağlılığını etkileyen faktörleri analiz etmek.
-- İnsan kaynakları stratejilerinin optimize edilmesine katkı sağlamak.
+## Veri Kümesi
 
-## Veri Seti
+Veri kümesi, Kaggle'dan alınan **HR Employee Attrition** verilerini içermektedir. Bu veri kümesi, 35 farklı özelliği ve 294 örneği içeren çalışan bilgilerini barındırmaktadır. Özellikler arasında çalışanların yaşları, eğitim düzeyleri, iş tatminleri, aylık gelirleri, çalıştıkları departmanlar gibi faktörler bulunmaktadır. 
 
-Bu projede kullanılan veri seti, çalışanların demografik bilgileri, iş geçmişi, eğitim durumu, çalışma saatleri ve diğer iş performansı verilerini içermektedir. Bu veriler ışığında, çalışanların şirkette kalma süreleri tahmin edilmektedir.
+Veri seti, çalışanın işten ayrılıp ayrılmadığını (Attrition) tahmin etmeyi amaçlayan bir sınıflandırma problemini çözmek için kullanılmaktadır.
 
-### Veri Seti Özellikleri:
-- Çalışanların yaşı
-- Eğitim seviyesi
-- Çalışma süresi
-- İşe geliş-gidiş saatleri
-- Performans değerlendirmeleri
-- İş tatmini gibi faktörler
+## Kullanılan Yöntemler
 
-## Kullanılan Teknolojiler
+1. **Veri Ön İşleme**:
+   - Eksik veriler kontrol edilip, gereksiz sütunlar çıkarılmıştır.
+   - Kategorik veriler sayısal verilere dönüştürülmüştür.
+   - Veriler, eğitim ve test setlerine ayrılmıştır.
 
-- **Python**
-- **Pandas** (Veri analizi)
-- **Scikit-learn** (Modelleme)
-- **Random Forest** (Makine öğrenmesi algoritması)
-- **Matplotlib / Seaborn** (Veri görselleştirme)
+2. **Modelleme**:
+   - **Random Forest** algoritması kullanılmıştır. Random Forest, birden fazla karar ağacının birleşiminden oluşan ve sınıflandırma problemlerinde güçlü bir performans gösteren bir makine öğrenmesi modelidir.
+   - Modelin eğitiminde 100 ağaç kullanılmıştır.
 
-## Yöntem
+3. **Model Değerlendirme**:
+   - Modelin performansı, **karmaşıklık matrisi (Confusion Matrix)**, **precision**, **recall**, **F1 skoru** gibi metriklerle değerlendirilmiştir.
+   - Karmaşıklık matrisi ile doğru ve yanlış sınıflandırmalar görselleştirilmiştir.
+   - ROC eğrisi ile modelin sınıflandırma başarısı görselleştirilmiştir.
 
-- Veriler, ön işleme ve temizleme adımlarından geçtikten sonra **Random Forest** algoritmasıyla modellenmiştir.
-- Model, çalışanların bağlılık süresini tahmin etmek için eğitim verilerini kullanır ve doğruluk oranları ölçülür.
-- Çalışan bağlılığına etki eden ana faktörler çıkarılarak, şirketlerin bu faktörleri stratejik kararlar alırken kullanması sağlanır.
+## Sonuçlar
 
-## Nasıl Çalışır?
+- Modelin **doğruluk oranı** %86.7 olarak bulunmuştur. 
+- **Precision** ve **Recall** değerlerine göre, modelin işten ayrılacak çalışanları (Attrition = 1) doğru tahmin etme konusunda bazı zorluklar yaşadığı gözlemlenmiştir. Recall değeri 0.10 iken, precision 0.50'dir.
+- **Feature Importance** analizine göre, bazı özelliklerin modelin kararlarını daha fazla etkilediği gözlemlenmiştir.
 
-1. Verilerinizi hazırlayın ve temizleyin.
-2. **Random Forest** modelini eğitin ve tahmin yapın.
-3. Modelin doğruluğunu test edin ve sonuçları analiz edin.
+## Görselleştirmeler
 
-## Kurulum
+- **Karmaşıklık Matrisi**: Modelin doğru ve yanlış sınıflandırmalarını gösteren bir ısı haritası.
+- **ROC Eğrisi**: Modelin sınıflandırma başarısını gösteren bir grafik.
+- **Özellik Önem Dereceleri (Feature Importance)**: Modelin kararlarını en fazla etkileyen özelliklerin görselleştirilmesi.
 
-1. **Gerekli Kütüphaneleri Yükleyin:**
+## Kullanılabilirlik
+
+Bu projeyi çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
+
+### Gereksinimler
+
+- Python 3.x
+- Pandas
+- Numpy
+- Scikit-learn
+- Matplotlib
+- Seaborn
+
+### Kurulum
+
+1. Gerekli kütüphaneleri yüklemek için:
+
 ```bash
-pip install pandas scikit-learn matplotlib seaborn
+pip install pandas numpy scikit-learn matplotlib seaborn
